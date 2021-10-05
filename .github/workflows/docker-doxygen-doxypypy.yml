@@ -56,4 +56,5 @@ jobs:
         run: |
           docker load < ~/docker/doxygen-doxypypy.tar.gz
           docker login --username ${DOCKERHUB_USERNAME} --password ${DOCKERHUB_PASSWORD}
-          docker push doxygen-doxypypy:latest
+          docker push toliak/doxygen-doxypypy:latest
+          docker push toliak/doxygen-doxypypy:$(cat doxygen-doxypypy/version)
