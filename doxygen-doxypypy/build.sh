@@ -5,5 +5,3 @@ docker tag toliak/doxygen-doxypypy:latest toliak/doxygen-doxypypy:$(cat ./versio
 
 mkdir -p ~/docker
 docker save toliak/doxygen-doxypypy:latest toliak/doxygen-doxypypy:$(cat ./version) | gzip > ~/docker/doxygen-doxypypy.tar.gz
-
-ls -la ~/docker
