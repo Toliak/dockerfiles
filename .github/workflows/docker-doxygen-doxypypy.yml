@@ -44,12 +44,15 @@ jobs:
         with:
             path: |
                 ~/docker
-            key: ${{ runner.os }}-build-${{ env.cache-name }}
+            key: ${{ runner.os }}-build-${{ env.cache-name }}-doxygen-doxypypy
             restore-keys: |
                 ${{ runner.os }}-build-${{ env.cache-name }}
                 ${{ runner.os }}-build-
                 ${{ runner.os }}-
       - name: Pull cached docker image
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
         run: |
           docker load < ~/docker/doxygen-doxypypy.tar.gz
           docker login --username ${DOCKERHUB_USERNAME} --password ${DOCKERHUB_PASSWORD}
