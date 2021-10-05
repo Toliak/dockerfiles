@@ -1,0 +1,56 @@
+name: Docker Doxygen with Doxypypy
+
+on:
+  push:
+    paths:
+      - "doxygen-doxypypy/**"
+  pull_request:
+    paths:
+      - "doxygen-doxypypy/**"
+
+jobs:
+  build:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - name: Build Doxygen with Doxypypy
+        run: |
+          cd doxygen-doxypypy
+          /bin/bash build.sh
+      - name: Cache Docker image
+        uses: actions/cache@v2.1.6
+        env:
+            cache-name: cache-docker
+        with:
+            path: |
+                ~/docker
+            key: ${{ runner.os }}-build-${{ env.cache-name }}
+            restore-keys: |
+                ${{ runner.os }}-build-${{ env.cache-name }}
+                ${{ runner.os }}-build-
+                ${{ runner.os }}-
+
+  publish:
+    runs-on: "ubuntu-latest"
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/doxygen-doxypypy-v')
+    needs:
+      - build
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - name: Cache Docker image
+        uses: actions/cache@v2.1.6
+        env:
+            cache-name: cache-docker
+        with:
+            path: |
+                ~/docker
+            key: ${{ runner.os }}-build-${{ env.cache-name }}
+            restore-keys: |
+                ${{ runner.os }}-build-${{ env.cache-name }}
+                ${{ runner.os }}-build-
+                ${{ runner.os }}-
+      - name: Pull cached docker image
+        run: |
+          docker load < ~/docker/doxygen-doxypypy.tar.gz
+          docker login --username ${DOCKERHUB_USERNAME} --password ${DOCKERHUB_PASSWORD}
+          docker push doxygen-doxypypy:latest
