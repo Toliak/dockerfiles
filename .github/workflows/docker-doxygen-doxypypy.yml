@@ -24,9 +24,9 @@ jobs:
         with:
             path: |
                 ~/docker
-            key: ${{ runner.os }}-build-${{ env.cache-name }}
+            key: ${{ runner.os }}-build-${{ env.cache-name }}-doxygen-doxypypy
             restore-keys: |
-                ${{ runner.os }}-build-${{ env.cache-name }}
+                ${{ runner.os }}-build-${{ env.cache-name }}-
                 ${{ runner.os }}-build-
                 ${{ runner.os }}-
 
