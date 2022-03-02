@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
       - name: Build Doxygen with Doxypypy
         run: |
           cd doxygen-doxypypy
@@ -36,7 +36,7 @@ jobs:
     needs:
       - build
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
       - name: Cache Docker image
         uses: actions/cache@v2.1.7
         env:
