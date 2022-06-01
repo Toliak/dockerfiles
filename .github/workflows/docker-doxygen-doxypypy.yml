@@ -18,7 +18,7 @@ jobs:
           cd doxygen-doxypypy
           /bin/bash build.sh
       - name: Cache Docker image
-        uses: actions/cache@v3.0.1
+        uses: actions/cache@v3.0.3
         env:
             cache-name: cache-docker
         with:
@@ -38,7 +38,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Cache Docker image
-        uses: actions/cache@v3.0.1
+        uses: actions/cache@v3.0.3
         env:
             cache-name: cache-docker
         with:
